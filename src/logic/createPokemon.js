@@ -44,10 +44,6 @@ function defineStats(specie, level, nature){
     return stats;
 }
 
-function isBuff(nature){
-    if()
-}
-
 function variationStats(base){
     return (base * variationStats()).toFixed(2);
 }
