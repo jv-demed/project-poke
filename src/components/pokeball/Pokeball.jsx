@@ -11,9 +11,9 @@ export function Pokeball({ poke, choice, setChoice }){
     return(
         <PokeballStyled>
             <img 
-                src={choice == poke ? imgs.openPokeball : imgs.pokeball} 
                 alt="Pokébola" 
                 onClick={() => setChoice(poke)}
+                src={choice == poke ? imgs.openPokeball : imgs.pokeball} 
             />
         </PokeballStyled>
     )

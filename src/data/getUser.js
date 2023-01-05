@@ -1,15 +1,12 @@
 import { getInfo } from '../infra/getInfo';
 
-export async function authService({ login, password }){
+export async function getUser(login){
     const user = await getInfo({
         filter: {
             type: 'user',
             fields: {
                 login: {
-                    eq: login
-                },
-                password: {
-                    eq: password
+                    eq: login,
                 }
             }
         }

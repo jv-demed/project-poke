@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import { createUser } from '../src/data/users';
+import { useRouter } from 'next/router';
 import { Form } from '../src/components/global/Form';
 import { TextInput } from '../src/components/global/TextInput';
 import { LinkBtn } from '../src/components/btns/LinkBtn';
-import { RegisterBtn } from '../src/components/btns/RegisterBtn';
+import { registerService } from '../src/services/registerService';
 
 const CadastroStyled = styled.main`
     align-items: center;
@@ -13,24 +13,41 @@ const CadastroStyled = styled.main`
     justify-content: center;
     .btns{
         display: flex;
+        gap: 15px;
         justify-content: space-between;
+        margin-top: 10px;
         width: 100%;
     }
 `
 
 export default function Cadastro(){
 
-    const [login, setLogin] = useState('');
-    const [password, setPassword] = useState('');
+    const router = useRouter();
+    const [user, setUser] = useState({
+        login: '',
+        password: ''
+    });
 
     return(
         <CadastroStyled>
-            <Form>
-                <TextInput title='Login' type='text' setInfo={setLogin} />
-                <TextInput title='Senha' type='password' setInfo={setPassword} />
+            <Form onSubmit={(e) => {
+                e.preventDefault();
+                registerService(user).then((res) => {
+                    res ? 
+                    router.push(`./${res.login}/inicial`)
+                    :
+                    alert('Usuário já existe!');
+                });
+            }}>
+                <TextInput type='txt' info='login' setInfo={setUser} obj={user}>
+                    Login
+                </TextInput>
+                <TextInput type='password' info='password' setInfo={setUser} obj={user}>
+                    Senha
+                </TextInput>
                 <div className="btns">
                     <LinkBtn title='Voltar' link='/' />
-                    <RegisterBtn login={login} password={password} />
+                    <button>Cadastrar</button>
                 </div>
             </Form>
         </CadastroStyled>
